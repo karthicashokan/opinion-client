@@ -1,0 +1,106 @@
+
+body {
+    font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Roboto, Ubuntu, sans-serif;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    font-size: 13px;
+    line-height: 15px;
+}
+
+.app {
+    width: 100%;
+    margin: auto;
+}
+
+@media screen and (min-width: 769px) {
+    .app {
+        width: 80%;
+    }
+}
+
+.discussion {
+    text-align: left;
+    padding: 20px 40px;
+    position: relative;
+}
+
+/**
+ * Commonly used
+ */
+.inline {
+    display: flex;
+    flex-direction: row;
+}
+.bullet {
+    margin: 0 10px;
+}
+.user-icon {
+    min-height: 30px;
+    min-width: 30px;
+    height: 30px;
+    width: 30px;
+    border-radius: 15px;
+    object-fit: cover;
+}
+input {
+    border: none;
+    border-radius: 4px;
+    outline: grey;
+    width: 100%;
+    margin: 0 15px;
+    padding: 0 10px;
+    outline: 0.5px solid gray;
+}
+button {
+    all: unset;
+    cursor: pointer;
+    color: white;
+    background-color: #6900F4;
+    font-size: 12px;
+    padding: 0 15px;
+    border-radius: 4px;
+}
+.text-button {
+    color: #3B4468;
+    cursor: pointer;
+    margin-left: 30px;
+}
+.text-button:first-child {
+    margin-left: 0;
+}
+.secondary {
+    color: #3B4468;
+    font-size: 11px;
+}
+
+/**
+ * Add comment
+ */
+#comment-box {
+    height: 30px;
+    line-height: 30px;
+    display: flex;
+    justify-content: space-between;
+    margin: 40px 0;
+}
+
+/**
+ * List comments
+ */
+#comment-list {
+    margin: 40px 0;
+}
+.comment-item {
+    display: flex;
+    flex-direction: row;
+    margin: 0 0 30px;
+}
+.comment-content {
+    margin-left: 15px;
+    padding-top: 5px;
+}
+.comment-text {
+    margin: 8px 0;
+    color: #191E2D;
+}
