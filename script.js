@@ -68,11 +68,13 @@ async function init() {
 function listAllComments() {
     const parentComments = COMMENTS.filter(c => !c.parentCommentId);
     const childComments = COMMENTS.filter(c => !!c.parentCommentId);
-    // First render parent comments
+    // Step 1: First render parent comments
     parentComments.forEach((comment) => {
         renderComment(comment);
     })
-    // Then, render child comments
+    // Step 2a: Sort ascending (newest child comments at the bottom)
+    childComments.sort((a, b) => new Date(a.date) - new Date(b.date));
+    // Step 2b: Then, render child comments
     childComments.forEach((comment) => {
         renderComment(comment);
     })
