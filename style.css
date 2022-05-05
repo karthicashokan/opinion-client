@@ -36,6 +36,7 @@ body {
     margin: 0 10px;
 }
 .user-icon {
+    position: relative;
     min-height: 30px;
     min-width: 30px;
     height: 30px;
@@ -95,9 +96,26 @@ hr {
     margin: 40px 0;
 }
 .comment-item {
+    margin: 0 0 30px;
+}
+.comment-body {
     display: flex;
     flex-direction: row;
-    margin: 0 0 30px;
+}
+.child-comment {
+    padding-left: 40px;
+    margin-top: 30px;
+}
+.has-child {
+    position: relative;
+}
+.has-child::before {
+    position: absolute;
+    content: '';
+    width: 2px;
+    height: 100%;
+    background-color: #E5E5E5;
+    left: 13px;
 }
 .comment-content {
     margin-left: 15px;

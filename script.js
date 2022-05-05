@@ -66,9 +66,42 @@ async function init() {
  * Lists all the existing comments in the discussion
  */
 function listAllComments() {
-    COMMENTS.forEach((comment) => {
+    const parentComments = COMMENTS.filter(c => !c.parentCommentId);
+    const childComments = COMMENTS.filter(c => !!c.parentCommentId);
+    // First render parent comments
+    parentComments.forEach((comment) => {
         renderComment(comment);
     })
+    // Then, render child comments
+    childComments.forEach((comment) => {
+        renderComment(comment);
+    })
+}
+
+/**
+ * Builds the commentItem HTML node
+ * @param comment
+ * @returns {Node}
+ */
+function getCommentItem(comment) {
+    // Step 1: Iterate over comments and get props
+    const { id, userId, text, date, dateFormatted, voteCount, parentCommentId } = comment;
+    // Step 2: Find the user who wrote this comment
+    const { name, photoUrl } = USERS.filter(user => user.id === userId)[0];
+    // Step 3: Create a node from commentItemTemplate
+    const commentItem = commentItemTemplate.content.cloneNode(true);
+    // Step 4: Set comment props
+    const commentItemDiv = commentItem.querySelector('.comment-item');
+    commentItemDiv.id = getCommentID(id);
+    commentItemDiv.className += parentCommentId ? ' child-comment' : '';
+    commentItem.querySelector('.user-icon').src = photoUrl;
+    commentItem.querySelector('.name').innerHTML = name;
+    commentItem.querySelector('.date-time').innerHTML = dateFormatted;
+    commentItem.querySelector('.comment-text').innerHTML = text;
+    commentItem.querySelector('.vote-count').innerHTML = voteCount > 0 ? `(${voteCount})` : null;
+    commentItem.querySelector('.upvote').onclick = (e) => { upvote(id) };
+    commentItem.querySelector('.reply').onclick = (e) => { reply(id) };
+    return commentItem;
 }
 
 /**
@@ -77,22 +110,32 @@ function listAllComments() {
  * @param insertAtEnd
  */
 function renderComment(comment, insertAtEnd = true) {
-    // Step 1: Iterate over comments and get props
-    const { id, userId, text, date, dateFormatted, voteCount } = comment;
-    // Step 2: Find the user who wrote this comment
-    const { name, photoUrl } = USERS.filter(user => user.id === userId)[0];
-    // Step 3: Create a node from commentItemTemplate
-    const commentItem = commentItemTemplate.content.cloneNode(true);
-    // Step 4: Set comment props
-    commentItem.querySelector('.comment-item').id = getCommentID(id);
-    commentItem.querySelector('.user-icon').src = photoUrl;
-    commentItem.querySelector('.name').innerHTML = name;
-    commentItem.querySelector('.date-time').innerHTML = dateFormatted;
-    commentItem.querySelector('.comment-text').innerHTML = text;
-    commentItem.querySelector('.vote-count').innerHTML = voteCount > 0 ? `(${voteCount})` : null;
-    commentItem.querySelector('.upvote').onclick = (e) => { upvote(id) };
-    commentItem.querySelector('.reply').onclick = (e) => { reply(id) };
-    // Step 5: Insert comment
+    const { parentCommentId } = comment
+    // Step 1: Get commentItem
+    const commentItem = getCommentItem(comment);
+    // Step 2: If parentCommentId is present, insertion slightly differs
+    if (parentCommentId) {
+        // Step 2a: get parentComment
+        const parentComment = document.getElementById(getCommentID(parentCommentId));
+        // Step 2b:
+        parentComment.className += ' has-child';
+
+        parentComment.appendChild(commentItem);
+
+        /*
+        // Step 2c: get parentComment's next sibling (There is no insert after)
+        const parentCommentElementSibling = parentComment.nextElementSibling;
+        if (parentCommentElementSibling) {
+            // Step 2d: If parentCommentElementSibling is present, then insert before it
+            commentList.insertBefore(commentItem, parentCommentElementSibling);
+        } else {
+            // Step 2e: If parentCommentElementSibling is not present, then simply add to end of list
+            commentList.appendChild(commentItem);
+        }
+         */
+        return;
+    }
+    // Step 3: Insert comment for cases without parentCommentId
     if (insertAtEnd) {
         commentList.appendChild(commentItem);
     } else {

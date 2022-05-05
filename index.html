@@ -11,22 +11,25 @@
 
 <template id="comment-item-template">
     <div class="comment-item">
-        <img class="user-icon" src="http://localhost:3001/james.jpg">
-        <div class="comment-content">
-            <div class="title-link inline">
-                <b><div class="name"></div></b>
-                <div class="bullet">&#8226;</div>
-                <div class="date-time secondary"></div>
-            </div>
-            <div class="comment-text"></div>
-            <div class="comment-actions">
-                <small class="inline">
-                    <div class="text-button upvote"><span>&#9650;&nbsp;&nbsp;Upvote </span><span class="vote-count"></span></div>
-                    <div class="text-button reply">Reply</div>
-                </small>
+        <div class="comment-body">
+            <img class="user-icon" src="http://localhost:3001/james.jpg">
+            <div class="comment-content">
+                <div class="title-link inline">
+                    <b><div class="name"></div></b>
+                    <div class="bullet">&#8226;</div>
+                    <div class="date-time secondary"></div>
+                </div>
+                <div class="comment-text"></div>
+                <div class="comment-actions">
+                    <small class="inline">
+                        <div class="text-button upvote"><span>&#9650;&nbsp;&nbsp;Upvote </span><span class="vote-count"></span></div>
+                        <div class="text-button reply">Reply</div>
+                    </small>
 
+                </div>
             </div>
         </div>
+        <div class="child-comments-list"></div>
     </div>
 </template>
 
