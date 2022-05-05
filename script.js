@@ -70,6 +70,11 @@ function listAllComments() {
     })
 }
 
+/**
+ * Inserts a HTML Node for comment
+ * @param comment
+ * @param insertAtEnd
+ */
 function renderComment(comment, insertAtEnd = true) {
     // Step 1: Iterate over comments and get props
     const { id, userId, text, date, voteCount } = comment;
@@ -93,6 +98,11 @@ function renderComment(comment, insertAtEnd = true) {
     }
 }
 
+/**
+ * Upvote
+ * @param commentId
+ * @returns {Promise<void>}
+ */
 async function upvote(commentId) {
     // Step 1: Mark upvote in backend
     const { voteCount } = await POST('upvote', {
@@ -104,6 +114,10 @@ async function upvote(commentId) {
     commentElement.querySelector('.vote-count').innerHTML = voteCount > 0 ? `(${voteCount})` : null;
 }
 
+/**
+ * Add Comment
+ * @returns {Promise<void>}
+ */
 async function addComment () {
     const text = commentText.value;
     // Step 1: Make sure text is valid
