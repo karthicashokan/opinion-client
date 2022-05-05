@@ -78,7 +78,7 @@ function listAllComments() {
  */
 function renderComment(comment, insertAtEnd = true) {
     // Step 1: Iterate over comments and get props
-    const { id, userId, text, date, voteCount } = comment;
+    const { id, userId, text, date, dateFormatted, voteCount } = comment;
     // Step 2: Find the user who wrote this comment
     const { name, photoUrl } = USERS.filter(user => user.id === userId)[0];
     // Step 3: Create a node from commentItemTemplate
@@ -87,7 +87,7 @@ function renderComment(comment, insertAtEnd = true) {
     commentItem.querySelector('.comment-item').id = getCommentID(id);
     commentItem.querySelector('.user-icon').src = photoUrl;
     commentItem.querySelector('.name').innerHTML = name;
-    commentItem.querySelector('.date-time').innerHTML = date;
+    commentItem.querySelector('.date-time').innerHTML = dateFormatted;
     commentItem.querySelector('.comment-text').innerHTML = text;
     commentItem.querySelector('.vote-count').innerHTML = voteCount > 0 ? `(${voteCount})` : null;
     commentItem.querySelector('.upvote').onclick = (e) => { upvote(id) };
@@ -143,7 +143,7 @@ async function addComment () {
         parentCommentId: REPLYING_TO_COMMENT || null
     });
     // Step 3: Set date correctly
-    comment.date = 'just now';
+    comment.dateFormatted = 'just now';
     // Step 4: Insert comment (at the start)
     renderComment(comment, false);
     // Step 5: Cleanup
