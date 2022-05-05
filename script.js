@@ -8,6 +8,7 @@ const commentList = document.getElementById('comment-list');
 const commentText = document.getElementById('comment-text');
 const commentItemTemplate = document.getElementById('comment-item-template');
 const getCommentID = (id) => `comment-item-${id}`;
+const commentsDefaultPlaceholder = 'What are your thoughts?';
 
 /**
  * POST Request
@@ -90,6 +91,7 @@ function renderComment(comment, insertAtEnd = true) {
     commentItem.querySelector('.comment-text').innerHTML = text;
     commentItem.querySelector('.vote-count').innerHTML = voteCount > 0 ? `(${voteCount})` : null;
     commentItem.querySelector('.upvote').onclick = (e) => { upvote(id) };
+    commentItem.querySelector('.reply').onclick = (e) => { reply(id) };
     // Step 5: Insert comment
     if (insertAtEnd) {
         commentList.appendChild(commentItem);
@@ -114,6 +116,16 @@ async function upvote(commentId) {
     commentElement.querySelector('.vote-count').innerHTML = voteCount > 0 ? `(${voteCount})` : null;
 }
 
+async function reply(commentId) {
+    // Step 1: Set REPLYING_TO_COMMENT to commentId
+    REPLYING_TO_COMMENT = commentId;
+    // Step 2: Get comment and user details
+    const comment = COMMENTS.find(c => c.id === commentId);
+    const user = USERS.find(u => u.id === comment.userId);
+    // Step 3: Set placeholder to reflect that the user is replying to a comment
+    commentText.placeholder = `Replying to ${user.name}'s comment`
+}
+
 /**
  * Add Comment
  * @returns {Promise<void>}
@@ -134,6 +146,10 @@ async function addComment () {
     comment.date = 'just now';
     // Step 4: Insert comment (at the start)
     renderComment(comment, false);
+    // Step 5: Cleanup
+    REPLYING_TO_COMMENT = null;
+    commentText.value = null;
+    commentText.placeholder = commentsDefaultPlaceholder;
 }
 
 (async () => {
