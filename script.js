@@ -116,7 +116,9 @@ async function addComment () {
         text,
         parentCommentId: REPLYING_TO_COMMENT || null
     });
-    // Step 3: Insert comment (at the start)
+    // Step 3: Set date correctly
+    comment.date = 'just now';
+    // Step 4: Insert comment (at the start)
     renderComment(comment, false);
 }
 
