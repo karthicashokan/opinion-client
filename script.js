@@ -100,7 +100,8 @@ function getCommentItem(comment) {
     commentItem.querySelector('.name').innerHTML = name;
     commentItem.querySelector('.date-time').innerHTML = dateFormatted;
     commentItem.querySelector('.comment-text').innerHTML = text;
-    commentItem.querySelector('.vote-count').innerHTML = voteCount > 0 ? `(${voteCount})` : null;
+    commentItem.querySelector('.vote-count').setAttribute('data-commentid', id);
+    commentItem.querySelector('.vote-count').setAttribute('data-initialcount', voteCount);
     commentItem.querySelector('.upvote').onclick = (e) => { upvote(id) };
     commentItem.querySelector('.reply').onclick = (e) => { reply(id) };
     return commentItem;
@@ -158,7 +159,7 @@ async function upvote(commentId) {
     });
     // Step 2: Update value in UI
     const commentElement = document.getElementById(getCommentID(commentId));
-    commentElement.querySelector('.vote-count').innerHTML = voteCount > 0 ? `(${voteCount})` : null;
+    commentElement.querySelector('.vote-count').querySelector('span').innerHTML = voteCount > 0 ? `(${voteCount})` : null;
 }
 
 async function reply(commentId) {
