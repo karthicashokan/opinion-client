@@ -5,6 +5,7 @@
 - This is the client part of the coding challenge which mostly uses vanilla JS
   - But, the display of upvotes is rendered using React (by directly loading the minified react app bundle)
   - The above approach works well for small components or in this case for the challenge, but in production I would prefer writing JSX code which will be transpiled for the browser 
+  - The current user will be randomized on load
   - See it working here: http://143.198.57.130:3001/
 
 ### How it looks like
