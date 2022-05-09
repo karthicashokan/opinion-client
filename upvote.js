@@ -53,15 +53,17 @@ class VoteCount extends React.Component {
     }
 }
 
-// Find all DOM containers, and render Like buttons into them.
-document.querySelectorAll('.vote-count')
-    .forEach(domContainer => {
-        // Get comment ID from data attribute
-        const commentId = parseInt(domContainer.dataset.commentid, 10);
-        const initialVoteCount = parseInt(domContainer.dataset.initialcount, 10);
-        const root = ReactDOM.createRoot(domContainer);
-        const props = { commentId, initialVoteCount };
-        root.render(
-            e(VoteCount, props)
-        );
-    });
+function renderReact() {
+    // Find all DOM containers, and render Like buttons into them.
+    document.querySelectorAll('.vote-count')
+        .forEach(domContainer => {
+            // Get comment ID from data attribute
+            const commentId = parseInt(domContainer.dataset.commentid, 10);
+            const initialVoteCount = parseInt(domContainer.dataset.initialcount, 10);
+            const root = ReactDOM.createRoot(domContainer);
+            const props = { commentId, initialVoteCount };
+            root.render(
+                e(VoteCount, props)
+            );
+        });
+}

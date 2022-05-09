@@ -196,6 +196,8 @@ async function addComment () {
     REPLYING_TO_COMMENT = null;
     commentText.value = null;
     commentText.placeholder = commentsDefaultPlaceholder;
+    // Step 6: Add to COMMENTS
+    COMMENTS.push(comment);
 }
 
 (async () => {
